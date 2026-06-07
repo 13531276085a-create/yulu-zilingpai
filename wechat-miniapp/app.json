@@ -1,0 +1,10 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "幸运星紫灵牌",
+    "navigationBarBackgroundColor": "#F9F5FF",
+    "navigationBarTextStyle": "black"
+  }
+}
