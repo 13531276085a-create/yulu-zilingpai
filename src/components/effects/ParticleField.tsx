@@ -107,8 +107,8 @@ function Particle({ p, burst, burstX, burstY }: { p: Particle; burst?: boolean; 
           height: p.size,
           borderRadius: p.size / 2,
           backgroundColor: isBurstParticle
-            ? '#E8D5A0'
-            : p.size > 2.5 ? '#E8D5A0' : '#C9A96E',
+            ? '#f5f0ff'
+            : p.size > 2.5 ? '#D4C4F0' : '#B096DC',
         },
         style,
       ]}

@@ -37,9 +37,9 @@ export default function MagicCircle({ size = 320, speed = 60, pulse }: Props) {
 
   const cx = size / 2;
   const cy = size / 2;
-  const GOLD = '#C9A96E';
-  const GOLD_FAINT = 'rgba(201,169,110,0.3)';
-  const GOLD_BRIGHT = '#E8D5A0';
+  const GOLD = '#CFB076';
+  const GOLD_FAINT = 'rgba(207,176,118,0.35)';
+  const GOLD_BRIGHT = '#ECDBB0';
 
   const svgProps = useAnimatedProps(() => ({
     transform: [{ rotate: `${rotation.value}deg` }],
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    opacity: 0.8,
+    opacity: 0.95,
   },
   coreWrapper: {
     position: 'absolute',

@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   shuffleText: {
-    color: '#E8D5A0',
+    color: '#ECDBB0',
     fontSize: 20,
     letterSpacing: 6,
     marginBottom: 8,

@@ -4,11 +4,17 @@ import Svg, { Circle, Polygon, Line } from 'react-native-svg';
 import ChineseText from '../ui/ChineseText';
 import { Shadows } from '../../constants/theme';
 
-const GOLD = '#C9A96E';
-const GOLD_BRIGHT = '#E8D5A0';
-const GOLD_FAINT = 'rgba(201,169,110,0.35)';
+// New palette: violet/lavender/white
+const VIOLET = '#B096DC';
+const LAVENDER = '#D4C4F0';
+const VIOLET_FAINT = 'rgba(180,150,220,0.4)';
+const WHITE_FAINT = 'rgba(245,240,255,0.5)';
 
-export default function CardBack() {
+interface Props {
+  small?: boolean;
+}
+
+export default function CardBack({ small }: Props) {
   const w = 130;
   const h = 195;
   const cx = w / 2;
@@ -21,7 +27,6 @@ export default function CardBack() {
     return `${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`;
   }).join(' ');
 
-  // Inner pentagram
   const innerStar = Array.from({ length: 5 }, (_, i) => {
     const a = (i * 4 * Math.PI) / 5 - Math.PI / 2 + Math.PI / 5;
     const r = 10;
@@ -30,13 +35,12 @@ export default function CardBack() {
 
   return (
     <View style={[styles.card, Shadows.md]}>
-      {/* SVG layer for ornate lines */}
       <Svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} style={StyleSheet.absoluteFill}>
         {/* Outer frame */}
-        <Line x1={4} y1={8} x2={w - 4} y2={8} stroke={GOLD} strokeWidth={1.2} />
-        <Line x1={4} y1={h - 8} x2={w - 4} y2={h - 8} stroke={GOLD} strokeWidth={1.2} />
-        <Line x1={8} y1={4} x2={8} y2={h - 4} stroke={GOLD} strokeWidth={1.2} />
-        <Line x1={w - 8} y1={4} x2={w - 8} y2={h - 4} stroke={GOLD} strokeWidth={1.2} />
+        <Line x1={4} y1={8} x2={w - 4} y2={8} stroke={VIOLET} strokeWidth={1.2} />
+        <Line x1={4} y1={h - 8} x2={w - 4} y2={h - 8} stroke={VIOLET} strokeWidth={1.2} />
+        <Line x1={8} y1={4} x2={8} y2={h - 4} stroke={VIOLET} strokeWidth={1.2} />
+        <Line x1={w - 8} y1={4} x2={w - 8} y2={h - 4} stroke={VIOLET} strokeWidth={1.2} />
 
         {/* Corner ornament arcs */}
         {[
@@ -46,27 +50,27 @@ export default function CardBack() {
           [w - 8, h - 8],
         ].map(([x, y], i) => (
           <React.Fragment key={`corner-${i}`}>
-            <Circle cx={x} cy={y} r={6} fill="none" stroke={GOLD} strokeWidth={0.8} />
-            <Circle cx={x} cy={y} r={3} fill={GOLD} opacity={0.5} />
+            <Circle cx={x} cy={y} r={6} fill="none" stroke={VIOLET} strokeWidth={0.8} />
+            <Circle cx={x} cy={y} r={3} fill={VIOLET} opacity={0.5} />
           </React.Fragment>
         ))}
 
         {/* Inner border */}
-        <Line x1={14} y1={18} x2={w - 14} y2={18} stroke={GOLD_FAINT} strokeWidth={0.5} />
-        <Line x1={14} y1={h - 18} x2={w - 14} y2={h - 18} stroke={GOLD_FAINT} strokeWidth={0.5} />
-        <Line x1={18} y1={14} x2={18} y2={h - 14} stroke={GOLD_FAINT} strokeWidth={0.5} />
-        <Line x1={w - 18} y1={14} x2={w - 18} y2={h - 14} stroke={GOLD_FAINT} strokeWidth={0.5} />
+        <Line x1={14} y1={18} x2={w - 14} y2={18} stroke={VIOLET_FAINT} strokeWidth={0.5} />
+        <Line x1={14} y1={h - 18} x2={w - 14} y2={h - 18} stroke={VIOLET_FAINT} strokeWidth={0.5} />
+        <Line x1={18} y1={14} x2={18} y2={h - 14} stroke={VIOLET_FAINT} strokeWidth={0.5} />
+        <Line x1={w - 18} y1={14} x2={w - 18} y2={h - 14} stroke={VIOLET_FAINT} strokeWidth={0.5} />
 
         {/* Central pentagram */}
-        <Polygon points={starPoints} fill="none" stroke={GOLD} strokeWidth={1.2} />
-        <Polygon points={innerStar} fill="none" stroke={GOLD_FAINT} strokeWidth={0.6} />
-        <Circle cx={cx} cy={cy} r={4} fill={GOLD_BRIGHT} opacity={0.6} />
+        <Polygon points={starPoints} fill="none" stroke={VIOLET} strokeWidth={1.2} />
+        <Polygon points={innerStar} fill="none" stroke={VIOLET_FAINT} strokeWidth={0.6} />
+        <Circle cx={cx} cy={cy} r={4} fill={LAVENDER} opacity={0.6} />
 
-        {/* Moon crescents - left and right side ornaments */}
-        <Circle cx={cx - 35} cy={cy} r={14} fill="none" stroke={GOLD_FAINT} strokeWidth={0.5} />
-        <Circle cx={cx - 35} cy={cy} r={12} fill="none" stroke={GOLD_FAINT} strokeWidth={0.3} />
-        <Circle cx={cx + 35} cy={cy} r={14} fill="none" stroke={GOLD_FAINT} strokeWidth={0.5} />
-        <Circle cx={cx + 35} cy={cy} r={12} fill="none" stroke={GOLD_FAINT} strokeWidth={0.3} />
+        {/* Side ornaments */}
+        <Circle cx={cx - 35} cy={cy} r={14} fill="none" stroke={VIOLET_FAINT} strokeWidth={0.5} />
+        <Circle cx={cx - 35} cy={cy} r={12} fill="none" stroke={VIOLET_FAINT} strokeWidth={0.3} />
+        <Circle cx={cx + 35} cy={cy} r={14} fill="none" stroke={VIOLET_FAINT} strokeWidth={0.5} />
+        <Circle cx={cx + 35} cy={cy} r={12} fill="none" stroke={VIOLET_FAINT} strokeWidth={0.3} />
       </Svg>
 
       {/* Top text */}
@@ -80,7 +84,7 @@ export default function CardBack() {
       </View>
       <ChineseText style={styles.subtitle}>紫靈牌</ChineseText>
 
-      {/* Corner petals (View-based, outside SVG) */}
+      {/* Corner petals */}
       <View style={[styles.cornerPetal, styles.tl]} />
       <View style={[styles.cornerPetal, styles.tr]} />
       <View style={[styles.cornerPetal, styles.bl]} />
@@ -94,13 +98,15 @@ const styles = StyleSheet.create({
     width: 130,
     height: 195,
     borderRadius: 3,
-    backgroundColor: '#0D0D1A',
+    backgroundColor: '#0e0a28',
+    borderWidth: 1,
+    borderColor: 'rgba(180,150,220,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
   },
   title: {
-    color: GOLD,
+    color: VIOLET,
     fontSize: 9,
     letterSpacing: 6,
     position: 'absolute',
@@ -116,19 +122,19 @@ const styles = StyleSheet.create({
   divLine: {
     width: 16,
     height: 0.5,
-    backgroundColor: GOLD_FAINT,
+    backgroundColor: VIOLET_FAINT,
     borderRadius: 1,
   },
   divDiamond: {
     width: 3,
     height: 3,
     transform: [{ rotate: '45deg' }],
-    backgroundColor: GOLD,
+    backgroundColor: VIOLET,
     borderRadius: 1,
     opacity: 0.6,
   },
   subtitle: {
-    color: GOLD,
+    color: VIOLET,
     fontSize: 9,
     letterSpacing: 5,
     position: 'absolute',
@@ -140,7 +146,7 @@ const styles = StyleSheet.create({
     height: 7,
     borderRadius: 10,
     borderWidth: 0.8,
-    borderColor: GOLD_FAINT,
+    borderColor: VIOLET_FAINT,
   },
   tl: { top: 10, left: 10, transform: [{ rotate: '-45deg' }] },
   tr: { top: 10, right: 10, transform: [{ rotate: '45deg' }] },
