@@ -1,0 +1,61 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - name: Build
+        run: npx expo export --platform web
+
+      - name: Fix SEO metadata
+        run: |
+          cat > dist/index.html << 'HTMLEOF'
+          <!DOCTYPE html>
+          <html lang="zh-TW">
+            <head>
+              <meta charset="utf-8" />
+              <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+              <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+              <title>雨露紫灵牌 - 紫微斗數靈牌占卜</title>
+              <meta name="description" content="雨露紫灵牌，在线紫微斗數靈牌占卜。抽取紫微斗數星曜牌卡，获得事业、感情、财运、健康的综合解读。由雨露精心制作。" />
+              <meta name="keywords" content="雨露紫灵牌,紫灵牌,紫微斗數,占卜,靈牌,算命,在线占卜,命理,雨露" />
+              <meta name="author" content="雨露" />
+              <meta name="robots" content="index, follow" />
+              <meta property="og:title" content="雨露紫灵牌 - 紫微斗數靈牌占卜" />
+              <meta property="og:description" content="在线紫微斗數靈牌占卜，抽取星曜牌卡，获得综合运势解读。" />
+              <meta property="og:type" content="website" />
+              <meta property="og:site_name" content="雨露紫灵牌" />
+              <style id="expo-reset">
+                html, body { height: 100%; }
+                body { overflow: hidden; }
+                #root { display: flex; height: 100%; flex: 1; }
+              </style>
+            <link rel="icon" href="/favicon.ico" /></head>
+            <body>
+              <noscript>您需要启用 JavaScript 才能使用雨露紫灵牌占卜。</noscript>
+              <div id="root"></div>
+            <script src="/_expo/static/js/web/PLACEHOLDER.js" defer></script>
+          </body>
+          </html>
+          HTMLEOF
+          JSNAME=$(ls dist/_expo/static/js/web/index-*.js | xargs basename)
+          sed -i "s|PLACEHOLDER.js|$JSNAME|g" dist/index.html
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: c6559764f1383a76af1cf7e2de8d5b26
+          command: pages deploy dist --project-name=yulu-zilingpai
